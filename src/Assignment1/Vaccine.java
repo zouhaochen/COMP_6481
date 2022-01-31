@@ -27,6 +27,7 @@ public class Vaccine
         priceTag = 0;
     }
 
+    //give vaccine id property
     Vaccine(long vaccineId)
     {
         vaccineBrand = Brand.unknown;
@@ -46,6 +47,7 @@ public class Vaccine
         this.priceTag = priceTag;
     }
 
+    //count for vaccine number
     {
         count++;
     }

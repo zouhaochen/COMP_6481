@@ -26,18 +26,23 @@ public class Main
         int currentVaccineAmount = 0;
         Vaccine[] inventory;
 
+        //display welcome information
         System.out.println("Welcome to the vaccine trace application");
+
+        //prompt for user input maximum number of vaccine
         System.out.println("Please enter the maximum number of vaccine store can contain");
         inputMaxVaccine = input.nextLine();
+
+        //input data validate check
         while(!inputMaxVaccine.matches(regex))
         {
             System.out.println("Invalid input, please enter again.");
             inputMaxVaccine = input.nextLine();
         }
-
         maxVaccines = Integer.parseInt(inputMaxVaccine);
         currentVolume = maxVaccines;
 
+        //empty array inventory track created vaccine objects
         inventory = new Vaccine[maxVaccines];
 
         //main menu
@@ -56,11 +61,11 @@ public class Main
 
             switch (choice)
             {
-                //option one
                 case "1":
                     String userInputPassword = "";
                     boolean flagPassword = true;
 
+                    //password validate check
                     while (flagPassword)
                     {
                         System.out.println("\nPlease enter the your password: ");
@@ -72,10 +77,18 @@ public class Main
                             String inputCaseOne = "";
                             int numberVaccineAdd = 0;
 
+                            if(currentVolume == 0)
+                            {
+                                System.out.println("No remain place for vaccine!");
+                                break;
+                            }
+
+                            //get enter vaccine number and compare
                             System.out.println("\nHow many vaccines do you want?");
                             System.out.println("Please Enter a number: ");
                             inputCaseOne = input.nextLine();
 
+                            //input validate check
                             while(!inputCaseOne.matches(regex))
                             {
                                 System.out.println("Invalid input, please enter again.");
@@ -83,12 +96,12 @@ public class Main
                             }
 
                             numberVaccineAdd = Integer.parseInt(inputCaseOne);
-
                             if(numberVaccineAdd <= currentVolume)
                             {
                                 System.out.println("\nEnough space for you to add vaccine.");
-
                                 int finishIndex = currentVaccineAmount + numberVaccineAdd;
+
+                                //input vaccine information to inventory array
                                 addInformation(currentVaccineAmount,finishIndex,inventory);
 
                                 System.out.println(numberVaccineAdd + " vaccines add.");
@@ -98,30 +111,29 @@ public class Main
                             }
                             else
                             {
-                                if(currentVolume == 0)
-                                {
-                                    System.out.println("No remain place for vaccine!");
-                                    break;
-                                }
+                                //inform user the number of remaining space
                                 System.out.println("\nYou can only add remain places number " + currentVolume + " of vaccines.");
                                 System.out.println("Do you want to add " + currentVolume + " vaccines or back to main menu?");
                                 System.out.println("Y/y for add information.");
                                 System.out.println("N/n for back to main menu.");
-
                                 String addOrBack = input.nextLine();
 
+                                //input validate check
                                 while(!addOrBack.equalsIgnoreCase("y") && !addOrBack.equalsIgnoreCase("n"))
                                 {
                                     System.out.println("Invalid choice, please enter again");
                                     addOrBack = input.nextLine();
                                 }
 
+                                //if user want to fill the left remaining number vaccine space
                                 if(addOrBack.equalsIgnoreCase("y"))
                                 {
                                     int startIndex = currentVaccineAmount;
                                     int finalIndex = inventory.length;
 
+                                    //input vaccine information to inventory array
                                     addInformation(startIndex,finalIndex,inventory);
+
                                     currentVolume = 0;
                                     currentVaccineAmount = finalIndex;
                                 }
@@ -133,9 +145,14 @@ public class Main
                         }
                         else
                         {
+                            //count for the times wrong password input
                             passwordCount++;
+
+                            //after 3rd wrong password entry, back to main menu
                             if(passwordCount%3 == 0 && passwordCount < 12)
                                 break;
+
+                            //after enter 12 times wrong password, exit the program
                             else if(passwordCount >= 12)
                             {
                                 System.out.println("\nProgram detected suspicious activities and will terminate immediately!");
