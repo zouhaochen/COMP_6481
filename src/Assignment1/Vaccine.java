@@ -106,11 +106,11 @@ public class Vaccine
     public String toString()
     {
         return "\nVaccine information:" +
-                "\nVaccine Brand: " + vaccineBrand +
-                "\nVaccine Dose: " + vaccineDose +
-                "\nVaccine Expire Date: " + expiryDate +
-                "\nVaccine ID:" + vaccineId +
-                "\nVaccine Price Tag: "+priceTag;
+                "\nVaccine Brand:\t\t\t" + vaccineBrand +
+                "\nVaccine Dose:\t\t\t" + vaccineDose +
+                "\nVaccine Expire Date:\t" + expiryDate +
+                "\nVaccine ID:\t\t\t\t" + vaccineId +
+                "\nVaccine Price Tag:\t\t"+priceTag;
     }
 
     //return the number of vaccine
