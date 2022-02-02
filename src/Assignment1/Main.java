@@ -49,9 +49,9 @@ public class Main
         while(flag)
         {
             System.out.println("\nWhat do you want to do?");
-            System.out.println("1. Enter new vaccines (password required)");
-            System.out.println("2. Change information of a vaccine (password required)");
-            System.out.println("3. Display all vaccines by a specific brand");
+            System.out.println("1. Enter new vaccines (password required).");
+            System.out.println("2. Change information of a vaccine (password required).");
+            System.out.println("3. Display all vaccines by a specific brand.");
             System.out.println("4. Display all vaccines under a certain a price.");
             System.out.println("5. Quit");
             System.out.println("Please enter your choice:");
@@ -122,7 +122,7 @@ public class Main
                                 //input validate check
                                 while(!addOrBack.equalsIgnoreCase("y") && !addOrBack.equalsIgnoreCase("n"))
                                 {
-                                    System.out.println("Invalid choice, please enter again");
+                                    System.out.println("Invalid choice, please enter again.");
                                     addOrBack = input.nextLine();
                                 }
 
@@ -146,6 +146,8 @@ public class Main
                         }
                         else
                         {
+                            System.out.println("Wrong password!");
+
                             //count for the times wrong password input
                             passwordCount++;
 
@@ -190,11 +192,6 @@ public class Main
                             }
                             System.out.println();
 
-                            while(true)
-                            {
-
-                            }
-                            /*
                             userInputCaseTwo = input.nextLine();
 
                             //vaccine number validate check
@@ -203,9 +200,9 @@ public class Main
                                 System.out.println("Please enter a valid vaccine number.");
                                 userInputCaseTwo = input.nextLine();
                             }
-
                             userInputCaseTwoInInt = Integer.parseInt(userInputCaseTwo);
-                            if(userInputCaseTwoInInt>inventory.length || inventory[userInputCaseTwoInInt] == null)
+
+                            while(userInputCaseTwoInInt>inventory.length-1 || inventory[userInputCaseTwoInInt] == null)
                             {
                                 //no vaccine inform user to make choice
                                 System.out.println("\nNo vaccine at specified number.");
@@ -217,23 +214,36 @@ public class Main
                                 //Input choice validate check
                                 while(!addOrBackCaseTwo.equalsIgnoreCase("y") && !addOrBackCaseTwo.equalsIgnoreCase("n"))
                                 {
-                                    System.out.println("Invalid choice, please enter again");
+                                    System.out.println("Invalid choice, please enter again.");
                                     addOrBackCaseTwo = input.nextLine();
                                 }
 
                                 if(addOrBackCaseTwo.equalsIgnoreCase("y"))
                                 {
+                                    System.out.println("Please reenter the vaccine number:");
                                     userInputCaseTwo = input.nextLine();
+                                    userInputCaseTwoInInt = Integer.parseInt(userInputCaseTwo);
                                 }
+
                                 else if(addOrBackCaseTwo.equalsIgnoreCase("n"))
                                 {
                                     break;
                                 }
                             }
-                             */
+
+                            if(inventory[userInputCaseTwoInInt] != null)
+                            {
+                                System.out.println("\nVaccine:\t#" + userInputCaseTwoInInt);
+                                System.out.println("ID:\t\t\t" + inventory[userInputCaseTwoInInt].getVaccineId());
+                                System.out.println("Brand:\t\t" + inventory[userInputCaseTwoInInt].getBrand());
+                                System.out.println("Dose:\t\t" + inventory[userInputCaseTwoInInt].getVaccineDose());
+                                System.out.println("Expiry:\t\t" + inventory[userInputCaseTwoInInt].getExpiryDate());
+                                System.out.println("Price:\t\t$" + inventory[userInputCaseTwoInInt].getPriceTag());
+                            }
                         }
                         else
                         {
+                            System.out.println("Wrong password!");
                             passwordCaseTwoCount++;
                             if(passwordCaseTwoCount%3==0)
                                 break;
@@ -279,11 +289,11 @@ public class Main
 
                 case "5":
                     flag = false;
-                    System.out.println("\nExit the program, see you next time");
+                    System.out.println("\nExit the program, see you next time!");
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Invalid choice, please enter again");
+                    System.out.println("Invalid choice, please enter again.");
                     break;
             }
         }
