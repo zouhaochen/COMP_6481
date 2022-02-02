@@ -92,7 +92,7 @@ public class Vaccine
     }
 
     //vaccine price accessor and mutator
-    public void setPriceTag()
+    public void setPriceTag(double priceTag)
     {
         this.priceTag = priceTag;
     }

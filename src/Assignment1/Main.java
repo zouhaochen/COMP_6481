@@ -27,10 +27,10 @@ public class Main
         Vaccine[] inventory;
 
         //display welcome information
-        System.out.println("Welcome to the vaccine trace application");
+        System.out.println("Welcome to the vaccine trace application!");
 
         //prompt for user input maximum number of vaccine
-        System.out.println("Please enter the maximum number of vaccine store can contain");
+        System.out.println("Please enter the maximum number of vaccine store can contain.");
         inputMaxVaccine = input.nextLine();
 
         //input data validate check
@@ -164,6 +164,23 @@ public class Main
                 case "2":
                 case "3":
                 case "4":
+                    String regexDouble = "^\\d+(\\.\\d+)?$";
+                    double priceSmallerThan = 0;
+
+                    System.out.println("\nPlease enter a price value:");
+                    String priceEnter = input.nextLine();
+
+                    //vaccine price tag validate check
+                    while (!priceEnter.matches(regexDouble))
+                    {
+                        System.out.println("Please enter a valid price tag.");
+                        priceEnter = input.nextLine();
+                    }
+
+                    priceSmallerThan = Double.parseDouble(priceEnter);
+                    findCheaperThan(priceSmallerThan,inventory);
+                    break;
+
                 case "5":
                     flag = false;
                     System.out.println("\nExit the program, see you next time");
@@ -176,6 +193,7 @@ public class Main
         }
     }
 
+    //add vaccine information into an array for tracking
     public static void addInformation(int startPoint, int endPoint, Vaccine[] vaccineList)
     {
         String regex = "^[1-9]+[0-9]*$";
@@ -191,6 +209,7 @@ public class Main
             System.out.println("Please enter Vaccine NO." + VaccineNo + " name:");
             String vaccineName = input.nextLine().toLowerCase();
 
+            //vaccine brand validate check
             while (!vaccineName.equals(pfizer.toString()) &&
                     !vaccineName.equals(moderna.toString()) &&
                     !vaccineName.equals(johnson.toString()) &&
@@ -206,6 +225,7 @@ public class Main
             System.out.println("Please enter Vaccine NO." + VaccineNo + " dose:");
             String vaccineDose = input.nextLine();
 
+            //vaccine dose validate check
             while(!vaccineDose.matches(regex))
             {
                 System.out.println("Please enter a valid dose.");
@@ -222,10 +242,30 @@ public class Main
             System.out.println("Please enter Vaccine NO." + VaccineNo + " price tag");
             String vaccinePriceTag = input.nextLine();
 
+            //vaccine price tag validate check
             while (!vaccinePriceTag.matches(regexDouble))
             {
-                System.out.println("Please enter a price tag.");
+                System.out.println("Please enter a valid price tag.");
                 vaccinePriceTag = input.nextLine();
+            }
+
+            double vaccinePriceTagInNumber = Double.parseDouble(vaccinePriceTag);
+            vaccineList[i].setPriceTag(vaccinePriceTagInNumber);
+        }
+    }
+
+    //search for vaccine with price value lower than input value
+    public static void findCheaperThan(double priceCheaperThan, Vaccine[] vaccineList)
+    {
+        System.out.println("\nVaccines value less than " + priceCheaperThan + " display as follow:");
+        double vaccinePriceTag = 0;
+
+        for(int i = 0; i < vaccineList.length; i++)
+        {
+            vaccinePriceTag = vaccineList[i].getPriceTag();
+            if (vaccinePriceTag < priceCheaperThan)
+            {
+                System.out.println(vaccineList[i]);
             }
         }
     }
