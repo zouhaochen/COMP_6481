@@ -163,11 +163,29 @@ public class Main
                     break;
                 case "2":
                 case "3":
+                    System.out.println("\nPlease enter vaccine name:");
+                    String searchName = input.nextLine();
+
+                    //vaccine name validate check
+                    while (!searchName.equals(pfizer.toString()) &&
+                            !searchName.equals(moderna.toString()) &&
+                            !searchName.equals(johnson.toString()) &&
+                            !searchName.equals(others.toString()) &&
+                            !searchName.equals(unknown.toString()))
+                    {
+                        System.out.println("Please enter a valid name: pfizer, moderna, johnson, others, unknown.");
+                        searchName = input.nextLine();
+                    }
+
+                    Vaccine.Brand searchNameInBrand = Vaccine.Brand.valueOf(searchName);
+                    findVaccinesBy(searchNameInBrand,inventory);
+                    break;
+
                 case "4":
                     String regexDouble = "^\\d+(\\.\\d+)?$";
                     double priceSmallerThan = 0;
 
-                    System.out.println("\nPlease enter a price value:");
+                    System.out.println("\nPlease enter vaccine price value:");
                     String priceEnter = input.nextLine();
 
                     //vaccine price tag validate check
@@ -264,6 +282,20 @@ public class Main
         {
             vaccinePriceTag = vaccineList[i].getPriceTag();
             if (vaccinePriceTag < priceCheaperThan)
+            {
+                System.out.println(vaccineList[i]);
+            }
+        }
+    }
+
+    //search for vaccine with input brand name
+    public static void findVaccinesBy(Vaccine.Brand brandNameSearch, Vaccine[] vaccineList)
+    {
+        System.out.println("\nVaccine with brand name " + brandNameSearch + " displays as follow:");
+        for(int i = 0; i < vaccineList.length; i++)
+        {
+            Vaccine.Brand vaccineBrandName = vaccineList[i].getBrand();
+            if(vaccineBrandName.equals(brandNameSearch))
             {
                 System.out.println(vaccineList[i]);
             }
