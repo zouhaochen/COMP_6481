@@ -170,6 +170,7 @@ public class Main
                     int passwordCaseTwoCount = 0;
                     String regexCaseTwo = "^\\d+$";
                     String addOrBackCaseTwo = "";
+                    String userChoice = "";
 
                     while(flagCaseTwo)
                     {
@@ -233,12 +234,103 @@ public class Main
 
                             if(inventory[userInputCaseTwoInInt] != null)
                             {
+                                //vaccine information display
                                 System.out.println("\nVaccine:\t#" + userInputCaseTwoInInt);
-                                System.out.println("ID:\t\t\t" + inventory[userInputCaseTwoInInt].getVaccineId());
-                                System.out.println("Brand:\t\t" + inventory[userInputCaseTwoInInt].getBrand());
-                                System.out.println("Dose:\t\t" + inventory[userInputCaseTwoInInt].getVaccineDose());
-                                System.out.println("Expiry:\t\t" + inventory[userInputCaseTwoInInt].getExpiryDate());
-                                System.out.println("Price:\t\t$" + inventory[userInputCaseTwoInInt].getPriceTag());
+                                vaccineInformationDisplay(inventory[userInputCaseTwoInInt]);
+
+                                //choice operation display
+                                System.out.println("\nWhat information would you like to change?");
+                                System.out.println("1. Brand ");
+                                System.out.println("2. Dose");
+                                System.out.println("3. Expiry");
+                                System.out.println("4. Price");
+                                System.out.println("5. Quit");
+                                System.out.println("Please enter your choice:");
+
+                                //user choice for changing vaccine information
+                                userChoice = input.nextLine();
+                                Boolean choiceFlag = true;
+
+                                while(choiceFlag)
+                                {
+                                    if (userChoice.equals("1"))
+                                    {
+                                        System.out.println("\nPlease enter the brand name to change:");
+                                        String vaccineName = input.nextLine().toLowerCase();
+
+                                        //vaccine brand validate check
+                                        while (!vaccineName.equals(pfizer.toString()) &&
+                                                !vaccineName.equals(moderna.toString()) &&
+                                                !vaccineName.equals(johnson.toString()) &&
+                                                !vaccineName.equals(others.toString()) &&
+                                                !vaccineName.equals(unknown.toString()))
+                                        {
+                                            System.out.println("Please enter a valid name: pfizer, moderna, johnson, others, unknown.");
+                                            vaccineName = input.nextLine();
+                                        }
+
+                                        inventory[userInputCaseTwoInInt].setBrand(Vaccine.Brand.valueOf(vaccineName));
+                                        vaccineInformationDisplay(inventory[userInputCaseTwoInInt]);
+
+                                        System.out.println("\nDo you want to continue change information or exist?");
+                                        System.out.println("Y/y for continue change information.");
+                                        System.out.println("N/n for back to main menu.");
+                                        String continueOrExist = input.nextLine();
+
+                                        //Input choice validate check
+                                        while(!continueOrExist.equalsIgnoreCase("y") && !continueOrExist.equalsIgnoreCase("n"))
+                                        {
+                                            System.out.println("Invalid choice, please enter again.");
+                                            continueOrExist = input.nextLine();
+                                        }
+
+                                        if(continueOrExist.equalsIgnoreCase("y"))
+                                        {
+                                            System.out.println("\nWhat information would you like to change?");
+                                            System.out.println("1. Brand ");
+                                            System.out.println("2. Dose");
+                                            System.out.println("3. Expiry");
+                                            System.out.println("4. Price");
+                                            System.out.println("5. Quit");
+                                            System.out.println("Please enter your choice:");
+                                            userChoice = input.nextLine();
+                                        }
+
+                                        else if(continueOrExist.equalsIgnoreCase("n"))
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    else if (userChoice.equals("2"))
+                                    {
+
+                                    }
+                                    else if (userChoice.equals("3"))
+                                    {
+
+                                    }
+                                    else if (userChoice.equals("4"))
+                                    {
+
+                                    }
+                                    else if (userChoice.equals("5"))
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        System.out.println("\nInvalid choice, please enter again.");
+                                        System.out.println("What information would you like to change?");
+                                        System.out.println("1. Brand ");
+                                        System.out.println("2. Dose");
+                                        System.out.println("3. Expiry");
+                                        System.out.println("4. Price");
+                                        System.out.println("5. Quit");
+                                        System.out.println("Please enter your choice:");
+                                        userChoice = input.nextLine();
+                                    }
+                                }
+
                             }
                         }
                         else
@@ -388,5 +480,15 @@ public class Main
                 System.out.println(vaccineList[i]);
             }
         }
+    }
+
+    //vaccine information display
+    public static void vaccineInformationDisplay(Vaccine vaccine)
+    {
+        System.out.println("\nID:\t\t\t" + vaccine.getVaccineId());
+        System.out.println("Brand:\t\t" + vaccine.getBrand());
+        System.out.println("Dose:\t\t" + vaccine.getVaccineDose());
+        System.out.println("Expiry:\t\t" + vaccine.getExpiryDate());
+        System.out.println("Price:\t\t$" + vaccine.getPriceTag());
     }
 }
