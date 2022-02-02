@@ -11,7 +11,7 @@ import static Assignment1.Vaccine.Brand.*;
  */
 public class Main
 {
-    private String password = "password";
+    private static String password = "password";
 
     public static void main(String[] args)
     {
@@ -70,7 +70,8 @@ public class Main
                     {
                         System.out.println("\nPlease enter the your password: ");
                         userInputPassword = input.nextLine();
-                        if(userInputPassword.equals("password"))
+
+                        if(userInputPassword.equals(password))
                         {
                             flagPassword = false;
                             passwordCount = 0;
@@ -162,6 +163,83 @@ public class Main
                     }
                     break;
                 case "2":
+                    String passwordCaseTwo = "";
+                    Boolean flagCaseTwo = true;
+                    int passwordCaseTwoCount = 0;
+                    String regexCaseTwo = "^\\d+$";
+                    String addOrBackCaseTwo = "";
+
+                    while(flagCaseTwo)
+                    {
+                        System.out.println("\nPlease enter the your password: ");
+                        passwordCaseTwo = input.nextLine();
+
+                        if(passwordCaseTwo.equals(password))
+                        {
+                            flagCaseTwo = false;
+                            passwordCaseTwoCount = 0;
+                            String userInputCaseTwo = "";
+                            int userInputCaseTwoInInt = 0;
+
+                            System.out.println("\nWhich vaccine number you want to update?");
+                            System.out.println("Current vaccine number display as follow:");
+
+                            for(int i = 0; i < inventory.length; i++)
+                            {
+                                System.out.print(i+" ");
+                            }
+                            System.out.println();
+
+                            while(true)
+                            {
+
+                            }
+                            /*
+                            userInputCaseTwo = input.nextLine();
+
+                            //vaccine number validate check
+                            while(!userInputCaseTwo.matches(regexCaseTwo))
+                            {
+                                System.out.println("Please enter a valid vaccine number.");
+                                userInputCaseTwo = input.nextLine();
+                            }
+
+                            userInputCaseTwoInInt = Integer.parseInt(userInputCaseTwo);
+                            if(userInputCaseTwoInInt>inventory.length || inventory[userInputCaseTwoInInt] == null)
+                            {
+                                //no vaccine inform user to make choice
+                                System.out.println("\nNo vaccine at specified number.");
+                                System.out.println("Do you want to reenter another vaccine number?");
+                                System.out.println("Y/y for reenter another number.");
+                                System.out.println("N/n for back to main menu.");
+                                addOrBackCaseTwo = input.nextLine();
+
+                                //Input choice validate check
+                                while(!addOrBackCaseTwo.equalsIgnoreCase("y") && !addOrBackCaseTwo.equalsIgnoreCase("n"))
+                                {
+                                    System.out.println("Invalid choice, please enter again");
+                                    addOrBackCaseTwo = input.nextLine();
+                                }
+
+                                if(addOrBackCaseTwo.equalsIgnoreCase("y"))
+                                {
+                                    userInputCaseTwo = input.nextLine();
+                                }
+                                else if(addOrBackCaseTwo.equalsIgnoreCase("n"))
+                                {
+                                    break;
+                                }
+                            }
+                             */
+                        }
+                        else
+                        {
+                            passwordCaseTwoCount++;
+                            if(passwordCaseTwoCount%3==0)
+                                break;
+                        }
+                    }
+                    break;
                 case "3":
                     System.out.println("\nPlease enter vaccine name:");
                     String searchName = input.nextLine();
