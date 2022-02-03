@@ -126,7 +126,7 @@ public class Vaccine
         {
             return false;
         }
-        else if(getClass()!=object.getClass())
+        else if(getClass() != object.getClass())
         {
             return false;
         }

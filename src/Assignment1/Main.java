@@ -108,7 +108,8 @@ public class Main
                                 //input vaccine information to inventory array
                                 addInformation(currentVaccineAmount,finishIndex,inventory);
 
-                                System.out.println(numberVaccineAdd + " vaccines add.");
+                                System.out.println("\n" + numberVaccineAdd + " vaccines add.");
+                                System.out.println("Current vaccines: " + Vaccine.findNumberOfCreatedVaccines());
                                 currentVolume = currentVolume - numberVaccineAdd;
                                 currentVaccineAmount = currentVaccineAmount + numberVaccineAdd;
                                 System.out.println("Current space: " + currentVolume);
@@ -140,8 +141,11 @@ public class Main
                                     //input vaccine information to inventory array
                                     addInformation(startIndex,finalIndex,inventory);
 
+                                    System.out.println("\n" + currentVolume + " vaccines add.");
                                     currentVolume = 0;
                                     currentVaccineAmount = finalIndex;
+                                    System.out.println("Current vaccines: " + Vaccine.findNumberOfCreatedVaccines());
+                                    System.out.println("Current space: " + currentVolume);
                                 }
                                 else if(addOrBack.equalsIgnoreCase("n"))
                                 {
