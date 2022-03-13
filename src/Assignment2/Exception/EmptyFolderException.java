@@ -27,6 +27,4 @@ public class EmptyFolderException extends IOException
     {
         return file;
     }
-
-
 }

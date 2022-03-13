@@ -1,16 +1,15 @@
 package Assignment2;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class SalesDatabase
 {
     private static Sales[] salesArr;
+    public static Logger logger = Logger.getLogger("SalesDatabase");
 
     public static void main(String[] args)
     {
@@ -133,6 +132,7 @@ public class SalesDatabase
         }
         catch(IOException e)
         {
+            logException(e);
             throw new RuntimeException("Failed to write file.");
         }
         finally
@@ -146,8 +146,17 @@ public class SalesDatabase
             }
             catch (IOException e)
             {
+                logException(e);
                 throw new RuntimeException("Failed to close file.");
             }
         }
+    }
+
+    //catch and log exceptions
+    public static void logException(Exception e)
+    {
+        StringWriter trace = new StringWriter();
+        e.printStackTrace(new PrintWriter(trace));
+        logger.severe(trace.toString());
     }
 }
