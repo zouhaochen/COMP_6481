@@ -9,14 +9,18 @@ import java.util.logging.Logger;
 public class SalesDatabase
 {
     private static Sales[] salesArr;
-    public static Logger logger = Logger.getLogger("SalesDatabase");
+    private static Logger logger = Logger.getLogger("SalesDatabase");
+
+    //data folder path
+    private static String folderPath = "src/Assignment2/Data";
+    private static File dir = new File(folderPath);
+
+    //buffered writer and reader
+    private static BufferedWriter bufferedWriter = null;
+    private static BufferedReader bufferedReader = null;
 
     public static void main(String[] args)
     {
-        //data folder path
-        String folderPath = "src/Assignment2/Data";
-        File dir = new File(folderPath);
-
         List<File> folderList = new ArrayList<File>();
         folderToList(dir, folderList);
 
@@ -27,7 +31,6 @@ public class SalesDatabase
         boolean flag = true;
         Scanner keyboard = new Scanner(System.in);
         String choice = "";
-
 
         while (flag)
         {
@@ -46,13 +49,67 @@ public class SalesDatabase
                     File file = new File(dir, "log.txt");
                     writePathToFile(folderList, fileList, file.toString());
                     System.out.println("The log.txt file create.");
+                    System.out.println();
                     break;
 
                 case "2":
+                    boolean caseTwoFlag = true;
+                    String caseTwoChoice = "";
+
+                    while (caseTwoFlag)
+                    {
+                        System.out.println("\nPlease enter the option:");
+                        System.out.println("1. Display file contents.");
+
+                        caseTwoChoice = keyboard.nextLine();
+
+                        switch (caseTwoChoice)
+                        {
+                            case "1":
+                                System.out.println("\nPlease enter the file name:");
+                                System.out.println("For example:");
+                                System.out.println("log.txt");
+                                System.out.println("/1/Tom.txt");
+                                System.out.println("/2/Sam.txt");
+                                System.out.println("/3/Harry.txt");
+                                String fileName = keyboard.nextLine();
+                                displayFileContents(fileName);
+                                break;
+                        }
+                    }
+
                     break;
 
                 case "3":
                     flag = false;
+
+                    //close all opened files before closing
+                    try
+                    {
+                        if(bufferedWriter != null)
+                        {
+                            bufferedWriter.close();
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        logException(e);
+                        throw new RuntimeException("Failed to close file.");
+                    }
+
+                    try
+                    {
+                        if(bufferedReader != null)
+                        {
+                            bufferedReader.close();
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        logException(e);
+                        throw new RuntimeException("Failed to close file.");
+                    }
+
                     System.out.println("\nExit the program, see you next time!");
                     System.exit(0);
                     break;
@@ -108,8 +165,6 @@ public class SalesDatabase
     //write data from the list collection to the file
     public static void writePathToFile(List<File> folderList, List<File> fileList, String txtListFile)
     {
-        BufferedWriter bufferedWriter = null;
-
         try
         {
             bufferedWriter = new BufferedWriter(new FileWriter(txtListFile));
@@ -158,5 +213,47 @@ public class SalesDatabase
         StringWriter trace = new StringWriter();
         e.printStackTrace(new PrintWriter(trace));
         logger.severe(trace.toString());
+    }
+
+    public static void addRecord(Sales sales)
+    {
+
+    }
+
+    //display file content method, accept an input file stream name
+    public static void displayFileContents(String fileName)
+    {
+        File file = new File(dir, fileName);
+        try
+        {
+            //get character stream
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
+            String line;
+            while((line = bufferedReader.readLine()) != null)
+            {
+                //the data that circulates
+                System.out.println(line);
+            }
+        }
+        catch(Exception e)
+        {
+            logException(e);
+            throw new RuntimeException("Failed to read file.");
+        }
+        finally
+        {
+            if(bufferedReader != null)
+            {
+                try
+                {
+                    bufferedReader.close();
+                }
+                catch(Exception e)
+                {
+                    logException(e);
+                    throw new RuntimeException("Failed to close file.");
+                }
+            }
+        }
     }
 }
