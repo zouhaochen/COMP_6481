@@ -28,6 +28,8 @@ public class SalesDatabase
 
     private static DateFormat format = new SimpleDateFormat("dd/mm/yyyy");
 
+    private static int time;
+
     public static void main(String[] args)
     {
         salesArr = new Sales[0];
@@ -89,7 +91,11 @@ public class SalesDatabase
                         System.out.println("1. Display file contents.");
                         System.out.println("2. Store records from specified file to system.");
                         System.out.println("3. Store records from every files to system.");
-                        System.out.println("4. Identify duplicate records.");
+                        System.out.println("4. Identify duplicate records and output database.");
+                        System.out.println("5. Binary sale search record in database.");
+                        System.out.println("6. Sequential sale search record in database.");
+                        System.out.println("7. Add a new record to database.");
+                        System.out.println("8. Back to the main menu.");
 
                         caseTwoChoice = keyboard.nextLine();
 
@@ -144,6 +150,32 @@ public class SalesDatabase
                                     System.out.println(e.getMessage());
                                 }
                                 identifyDuplicateRecords();
+                                break;
+
+                            case "5":
+                                System.out.println("\nPlease enter the order ID you want to search:");
+                                System.out.println("For example 149590289");
+                                String orderIDInString = keyboard.nextLine();
+                                long orderID = Long.parseLong(orderIDInString);
+                                System.out.println();
+                                binarySaleSearch(orderID);
+                                break;
+                            case "6":
+                                System.out.println("\nPlease enter the order ID you want to search:");
+                                System.out.println("For example 149590289");
+                                String orderIDInStringSequentialSearch = keyboard.nextLine();
+                                long orderIDSequentialSearch = Long.parseLong(orderIDInStringSequentialSearch);
+                                System.out.println();
+                                sequentialSaleSearch(orderIDSequentialSearch);
+                                break;
+
+                            case "8":
+                                System.out.println();
+                                caseTwoFlag = false;
+                                break;
+
+                            default:
+                                System.out.println("Invalid choice, please enter again.");
                                 break;
                         }
                     }
@@ -536,13 +568,104 @@ public class SalesDatabase
         }
     }
 
+    //search a record using binary search method
     public static void binarySaleSearch(long orderID)
     {
+        //sort database order ID in increasing order
+        for(int i = 0; i < salesArr.length - 1; i++)
+        {
+            for(int j = i + 1; j < salesArr.length; j++)
+            {
+                Sales temp = new Sales();
+                if(salesArr[i].getOrderID()>salesArr[j].getOrderID())
+                {
+                    temp = salesArr[i];
+                    salesArr[i] = salesArr[j];
+                    salesArr[j] = temp;
+                }
+            }
+        }
 
+        //store sorted order ID
+        long[] orderIDList = new long[salesArr.length];
+
+        for(int i = 0; i < orderIDList.length; i++)
+        {
+            orderIDList[i] = salesArr[i].getOrderID();
+        }
+
+        time = 0;
+        long searchResultID = binarySearchRecursion(orderIDList, 0, orderIDList.length - 1, orderID);
+        if(searchResultID == -1)
+        {
+            System.out.println("Can not find the record with order ID: " + orderID);
+        }
+        else
+        {
+            for(int i = 0; i < salesArr.length; i++)
+            {
+                if (salesArr[i].getOrderID() == orderID)
+                {
+                    System.out.println("Record result with order ID:");
+                    System.out.println(salesArr[i]);
+                    System.out.println("Number of iterations need to perform the search:");
+                    System.out.println(time);
+                }
+            }
+        }
     }
 
+    //binary search method
+    public static long binarySearchRecursion(long[] input, int low, int high, long target)
+    {
+        int middle = (low + high) / 2;
+
+        // base case
+        if (target < input[low] || target > input[high] || low > high)
+        {
+            time++;
+            return -1;
+        }
+
+        if (target < input[middle])
+        {
+            time++;
+            return binarySearchRecursion(input, low, middle - 1, target);
+        }
+        else if (target > input[middle])
+        {
+            time++;
+            return binarySearchRecursion(input, low + 1, high, target);
+        }
+        else
+            {
+                time++;
+                return middle;
+            }
+    }
+
+    //search a record using sequential search method
     public static void sequentialSaleSearch(long orderID)
     {
+        boolean searchFlag = false;
+        time = 0;
 
+        for(int i = 0; i < salesArr.length; i++)
+        {
+            time++;
+            if (salesArr[i].getOrderID() == orderID)
+            {
+                searchFlag = true;
+                System.out.println("Record result with order ID:");
+                System.out.println(salesArr[i]);
+                System.out.println("Number of iterations need to perform the search:");
+                System.out.println(time);
+            }
+        }
+
+        if(searchFlag == false)
+        {
+            System.out.println("Can not find the record with order ID: " + orderID);
+        }
     }
 }
