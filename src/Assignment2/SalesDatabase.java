@@ -6,6 +6,7 @@ import Assignment2.Exception.InvalidFileException;
 
 import java.io.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,6 +161,7 @@ public class SalesDatabase
                                 System.out.println();
                                 binarySaleSearch(orderID);
                                 break;
+
                             case "6":
                                 System.out.println("\nPlease enter the order ID you want to search:");
                                 System.out.println("For example 149590289");
@@ -167,6 +169,146 @@ public class SalesDatabase
                                 long orderIDSequentialSearch = Long.parseLong(orderIDInStringSequentialSearch);
                                 System.out.println();
                                 sequentialSaleSearch(orderIDSequentialSearch);
+                                break;
+
+                            case "7":
+                                Sales salesAdd = new Sales();
+                                System.out.println("\nPlease enter the sales information you want to add:");
+
+                                System.out.println("Please enter the country:");
+                                System.out.println("For example: Germany");
+                                String countryAdd = keyboard.nextLine();
+                                salesAdd.setCountry(countryAdd);
+
+                                System.out.println("Please enter the item type:");
+                                System.out.println("For example: Fruits");
+                                String itemTypeAdd = keyboard.nextLine();
+                                salesAdd.setItemType(itemTypeAdd);
+
+                                System.out.println("Please enter the order priority:");
+                                System.out.println("For example: M");
+                                String orderPriorityAdd = keyboard.nextLine();
+                                salesAdd.setOrderPriority(orderPriorityAdd.charAt(0));
+
+                                System.out.println("Please enter the order date:");
+                                System.out.println("For example: 16/03/2016");
+                                String orderDateAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setOrderDate(format.parse(orderDateAdd));
+                                }
+                                catch (ParseException e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                System.out.println("Please enter the order ID:");
+                                System.out.println("For example: 300152766");
+                                String orderIDAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setOrderID(Long.parseLong(orderIDAdd));
+                                }
+                                catch (Exception e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                System.out.println("Please enter the ship date:");
+                                System.out.println("For example: 08-04-2016");
+                                String shipDateAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setShipDate(format.parse(shipDateAdd));
+                                }
+                                catch (ParseException e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                System.out.println("Please enter the units sold");
+                                System.out.println("For example: 7281");
+                                String unitSoldAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setUnitsSold(Integer.parseInt(unitSoldAdd));
+                                }
+                                catch (Exception e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                System.out.println("Please enter the units price");
+                                System.out.println("For example: 9.33");
+                                String unitPriceAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setUnitPrice(Float.parseFloat(unitPriceAdd));
+                                }
+                                catch (Exception e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                System.out.println("Please enter the units cost");
+                                System.out.println("For example: 6.92");
+                                String unitCostAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setUnitCost(Float.parseFloat(unitCostAdd));
+                                }
+                                catch (Exception e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                System.out.println("Please enter the revenue");
+                                System.out.println("For example: 61792.24");
+                                String revenueAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setRevenue(Double.parseDouble(revenueAdd));
+                                }
+                                catch (Exception e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                System.out.println("Please enter the total cost");
+                                System.out.println("For example: 50307.76");
+                                String totalCostAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setTotalCost(Double.parseDouble(totalCostAdd));
+                                }
+                                catch (Exception e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                System.out.println("Please enter the total profit");
+                                System.out.println("For example: 1754.48");
+                                String totalProfitAdd = keyboard.nextLine();
+                                try
+                                {
+                                    salesAdd.setTotalProfit(Double.parseDouble(totalProfitAdd));
+                                }
+                                catch (Exception e)
+                                {
+                                    logException(e);
+                                    System.out.println(e.getMessage());
+                                }
+
+                                addRecord(salesAdd);
+                                System.out.println("The sale record has been added");
                                 break;
 
                             case "8":
@@ -330,9 +472,19 @@ public class SalesDatabase
         logger.severe(trace.toString());
     }
 
+    //add record to salesArr database
     public static void addRecord(Sales sales)
     {
+        Sales[] salesArrAdd = new Sales[salesArr.length+1];
 
+        for(int i = 0; i < salesArr.length; i++)
+        {
+            salesArrAdd[i] = salesArr[i];
+        }
+
+        salesArrAdd[salesArr.length] = sales;
+        salesArr = new Sales[salesArrAdd.length];
+        salesArr = salesArrAdd;
     }
 
     //display file content method, accept an input file stream name
