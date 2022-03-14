@@ -1,16 +1,20 @@
 package Assignment2;
 
+import Assignment2.Exception.DuplicateRecordException;
+
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class SalesDatabase
 {
-    private static Sales[] salesArr = new Sales[0];
+    private static Sales[] salesArr;
+    private static Sales[] salesArrTemp;
     private static Logger logger = Logger.getLogger("SalesDatabase");
 
     //data folder path
@@ -25,6 +29,7 @@ public class SalesDatabase
 
     public static void main(String[] args)
     {
+        salesArr = new Sales[0];
         List<File> folderList = new ArrayList<File>();
         folderToList(dir, folderList);
 
@@ -64,7 +69,9 @@ public class SalesDatabase
                     {
                         System.out.println("\nPlease enter the option:");
                         System.out.println("1. Display file contents.");
-                        System.out.println("2. Store records from file to system.");
+                        System.out.println("2. Store records from specified file to system.");
+                        System.out.println("3. Store records from every files to system.");
+                        System.out.println("4. Identify duplicate records.");
 
                         caseTwoChoice = keyboard.nextLine();
 
@@ -78,6 +85,7 @@ public class SalesDatabase
                                 System.out.println("/2/Sam.txt");
                                 System.out.println("/3/Harry.txt");
                                 String fileNameCaseOne = keyboard.nextLine();
+                                System.out.println();
                                 displayFileContents(fileNameCaseOne);
                                 break;
 
@@ -89,6 +97,35 @@ public class SalesDatabase
                                 System.out.println("/3/Harry.txt");
                                 String fileNameCaseTwo = keyboard.nextLine();
                                 storeRecord(fileNameCaseTwo);
+                                System.out.println("\nRecord database in system as follows:");
+                                for(int i = 0; i < salesArr.length; i++)
+                                {
+                                    System.out.println(salesArr[i]);
+                                }
+                                break;
+
+                            case "3":
+                                storeRecord("/1/Tom.txt");
+                                storeRecord("/2/Sam.txt");
+                                storeRecord("/3/Harry.txt");
+                                System.out.println("\nRecord database in system as follows:");
+                                for(int i = 0; i < salesArr.length; i++)
+                                {
+                                    System.out.println(salesArr[i]);
+                                }
+                                break;
+
+                            case "4":
+                                System.out.println();
+                                try
+                                {
+                                    DuplicateRecordNotification();
+                                }
+                                catch (Exception e)
+                                {
+                                    System.out.println(e.getMessage());
+                                }
+                                IdentifyDuplicateRecords();
                                 break;
                         }
                     }
@@ -297,22 +334,28 @@ public class SalesDatabase
         int recordNumber = lines+1;
         String[] stringDataSet = new String[recordNumber];
 
+        //create a temp sales array to store newly added record
         int salesArrSpace = salesArr.length;
         int salesArrTempSpace = salesArrSpace + recordNumber;
-        Sales[] salesArrTemp = new Sales[salesArrTempSpace];
+        salesArrTemp = new Sales[salesArrTempSpace];
 
+        //store previous record
         for(int i = 0; i < salesArrSpace; i++)
         {
             salesArrTemp[i] = salesArr[i];
         }
 
+        //define added record by default constructor
         for(int i = salesArrSpace; i < salesArrTempSpace; i++)
         {
             salesArrTemp[i] = new Sales();
         }
 
+        //transfer from String format record in txt file to Sales objects
         try
         {
+            System.out.println();
+
             //get character stream
             bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
             String line;
@@ -324,63 +367,64 @@ public class SalesDatabase
                 index = index + 1;
             }
 
-            for(int i = 0 ; i < stringDataSet.length; i++)
+            for(int i = 0, k = salesArrSpace ; i < stringDataSet.length; i++, k++)
             {
-                System.out.println(stringDataSet[i]);
+                System.out.println("record NO." + (i+1) + " store in file: "+stringDataSet[i]);
                 String[] splitData = stringDataSet[i].split("\\s+");
                 for (int j = 0; j < splitData.length; j++)
                 {
                     if (j == 0)
                     {
-                        salesArrTemp[i].setCountry(splitData[j]);
+                        salesArrTemp[k].setCountry(splitData[j]);
                     }
                     else if (j == 1)
                     {
-                        salesArrTemp[i].setItemType(splitData[j]);
+                        salesArrTemp[k].setItemType(splitData[j]);
                     }
                     else if (j == 2)
                     {
-                        salesArrTemp[i].setOrderPriority(splitData[j].charAt(0));
+                        salesArrTemp[k].setOrderPriority(splitData[j].charAt(0));
                     }
                     else if (j == 3)
                     {
-                        salesArrTemp[i].setOrderDate(format.parse(splitData[j]));
+                        salesArrTemp[k].setOrderDate(format.parse(splitData[j]));
                     }
                     else if (j == 4)
                     {
-                        salesArrTemp[i].setOrderID(Long.parseLong(splitData[j]));
+                        salesArrTemp[k].setOrderID(Long.parseLong(splitData[j]));
                     }
                     else if (j == 5)
                     {
-                        salesArrTemp[i].setShipDate(format.parse(splitData[j]));
+                        salesArrTemp[k].setShipDate(format.parse(splitData[j]));
                     }
                     else if (j == 6)
                     {
-                        salesArrTemp[i].setUnitsSold(Integer.parseInt(splitData[j]));
+                        salesArrTemp[k].setUnitsSold(Integer.parseInt(splitData[j]));
                     }
                     else if (j == 7)
                     {
-                        salesArrTemp[i].setUnitPrice(Float.parseFloat(splitData[j]));
+                        salesArrTemp[k].setUnitPrice(Float.parseFloat(splitData[j]));
                     }
                     else if (j == 8)
                     {
-                        salesArrTemp[i].setUnitCost(Float.parseFloat(splitData[j]));
+                        salesArrTemp[k].setUnitCost(Float.parseFloat(splitData[j]));
                     }
                     else if (j == 9)
                     {
-                        salesArrTemp[i].setRevenue(Double.parseDouble(splitData[j]));
+                        salesArrTemp[k].setRevenue(Double.parseDouble(splitData[j]));
                     }
                     else if (j == 10)
                     {
-                        salesArrTemp[i].setTotalCost(Double.parseDouble(splitData[j]));
+                        salesArrTemp[k].setTotalCost(Double.parseDouble(splitData[j]));
                     }
                     else if (j == 11)
                     {
-                        salesArrTemp[i].setTotalProfit(Double.parseDouble(splitData[j]));
+                        salesArrTemp[k].setTotalProfit(Double.parseDouble(splitData[j]));
                     }
                 }
-                System.out.println(salesArrTemp[i]);
+                System.out.println("record NO." + (k+1) + " add in system: " + salesArrTemp[k]);
             }
+
         }
         catch(Exception e)
         {
@@ -403,5 +447,42 @@ public class SalesDatabase
             }
         }
 
+        salesArr = new Sales[salesArrTempSpace];
+        salesArr = salesArrTemp;
+    }
+
+    //identify and generate a collection without duplicate records
+    public static void IdentifyDuplicateRecords()
+    {
+        List<Sales> list = new ArrayList<Sales>();
+        for (int i=0; i<salesArr.length; i++)
+        {
+            if(!list.contains(salesArr[i]))
+            {
+                list.add(salesArr[i]);
+            }
+            else if(list.contains(salesArr[i]))
+            {
+                System.out.println("Duplicate record: " + salesArr[i].toString());
+            }
+        }
+        System.out.println("Database without duplicate record: " + list);
+    }
+
+    //notify user duplicate records
+    public static void DuplicateRecordNotification() throws DuplicateRecordException
+    {
+        List<Sales> list = new ArrayList<Sales>();
+        for (int i=0; i<salesArr.length; i++)
+        {
+            if(!list.contains(salesArr[i]))
+            {
+                list.add(salesArr[i]);
+            }
+            else
+            {
+                throw new DuplicateRecordException();
+            }
+        }
     }
 }
