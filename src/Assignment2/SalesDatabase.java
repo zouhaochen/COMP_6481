@@ -6,7 +6,6 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -129,7 +128,6 @@ public class SalesDatabase
                                 break;
                         }
                     }
-
                     break;
 
                 case "3":
@@ -454,6 +452,7 @@ public class SalesDatabase
     //identify and generate a collection without duplicate records
     public static void IdentifyDuplicateRecords()
     {
+        File file = new File(dir, "output.txt");
         List<Sales> list = new ArrayList<Sales>();
         for (int i=0; i<salesArr.length; i++)
         {
@@ -467,6 +466,24 @@ public class SalesDatabase
             }
         }
         System.out.println("Database without duplicate record: " + list);
+
+        try
+        {
+            bufferedWriter = new BufferedWriter( new FileWriter(file) );
+
+            for(int i = 0; i < list.size(); i++ )
+            {
+                bufferedWriter.write(String.valueOf(list.get(i)));
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        }
+        catch (IOException e)
+        {
+            logException(e);
+            throw new RuntimeException("Failed to write file.");
+        }
+        System.out.println("output.txt file generate.");
     }
 
     //notify user duplicate records
