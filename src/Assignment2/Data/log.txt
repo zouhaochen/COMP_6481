@@ -3,5 +3,6 @@ directory: /Users/zouhaochen/COMP6481/src/Assignment2/Data/3
 directory: /Users/zouhaochen/COMP6481/src/Assignment2/Data/2
 file: /Users/zouhaochen/COMP6481/src/Assignment2/Data/1/Tom.txt
 file: /Users/zouhaochen/COMP6481/src/Assignment2/Data/log.txt
+file: /Users/zouhaochen/COMP6481/src/Assignment2/Data/output.txt
 file: /Users/zouhaochen/COMP6481/src/Assignment2/Data/3/Harry.txt
 file: /Users/zouhaochen/COMP6481/src/Assignment2/Data/2/Sam.txt

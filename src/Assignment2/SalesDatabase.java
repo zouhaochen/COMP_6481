@@ -1,6 +1,8 @@
 package Assignment2;
 
 import Assignment2.Exception.DuplicateRecordException;
+import Assignment2.Exception.EmptyFolderException;
+import Assignment2.Exception.InvalidFileException;
 
 import java.io.*;
 import java.text.DateFormat;
@@ -29,11 +31,28 @@ public class SalesDatabase
     public static void main(String[] args)
     {
         salesArr = new Sales[0];
+
         List<File> folderList = new ArrayList<File>();
-        folderToList(dir, folderList);
+        try
+        {
+            folderToList(dir, folderList);
+        }
+        catch (Exception e)
+        {
+            logException(e);
+            System.out.println(e.getMessage());
+        }
 
         List<File> fileList = new ArrayList<File>();
-        fileToList(dir, fileList);
+        try
+        {
+            fileToList(dir, fileList);
+        }
+        catch (Exception e)
+        {
+            logException(e);
+            System.out.println(e.getMessage());
+        }
 
         //main menu
         boolean flag = true;
@@ -118,13 +137,13 @@ public class SalesDatabase
                                 System.out.println();
                                 try
                                 {
-                                    DuplicateRecordNotification();
+                                    duplicateRecordNotification();
                                 }
                                 catch (Exception e)
                                 {
                                     System.out.println(e.getMessage());
                                 }
-                                IdentifyDuplicateRecords();
+                                identifyDuplicateRecords();
                                 break;
                         }
                     }
@@ -172,7 +191,7 @@ public class SalesDatabase
     }
 
     //write file path to list collection
-    public static void fileToList(File dir, List<File> list)
+    public static void fileToList(File dir, List<File> list) throws InvalidFileException
     {
         File[] files = dir.listFiles();
 
@@ -191,12 +210,16 @@ public class SalesDatabase
                 {
                     list.add(file);
                 }
+                else
+                {
+                    throw new InvalidFileException();
+                }
             }
         }
     }
 
     //write folder path to list collection
-    public static void folderToList(File dir, List<File> list)
+    public static void folderToList(File dir, List<File> list) throws EmptyFolderException
     {
         File[] files = dir.listFiles();
 
@@ -208,6 +231,16 @@ public class SalesDatabase
                 //get the path to all folders during recursion
                 list.add(file);
                 folderToList(file, list);
+
+                String[] fileContent = file.list();
+                if (fileContent.length > 0)
+                {
+
+                }
+                else if (fileContent.length <= 0)
+                {
+                    throw new EmptyFolderException();
+                }
             }
         }
     }
@@ -450,7 +483,7 @@ public class SalesDatabase
     }
 
     //identify and generate a collection without duplicate records
-    public static void IdentifyDuplicateRecords()
+    public static void identifyDuplicateRecords()
     {
         File file = new File(dir, "output.txt");
         List<Sales> list = new ArrayList<Sales>();
@@ -487,7 +520,7 @@ public class SalesDatabase
     }
 
     //notify user duplicate records
-    public static void DuplicateRecordNotification() throws DuplicateRecordException
+    public static void duplicateRecordNotification() throws DuplicateRecordException
     {
         List<Sales> list = new ArrayList<Sales>();
         for (int i=0; i<salesArr.length; i++)
@@ -501,5 +534,15 @@ public class SalesDatabase
                 throw new DuplicateRecordException();
             }
         }
+    }
+
+    public static void binarySaleSearch(long orderID)
+    {
+
+    }
+
+    public static void sequentialSaleSearch(long orderID)
+    {
+
     }
 }
