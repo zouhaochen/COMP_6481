@@ -1,5 +1,7 @@
 package Assignment3;
 
+import java.util.Scanner;
+
 public class Show
 {
     private String showID;
@@ -70,6 +72,19 @@ public class Show
     public double getEndTime()
     {
         return endTime;
+    }
+
+    //clone method
+    protected Object clone(String showID) throws CloneNotSupportedException
+    {
+        System.out.println("Please enter a new show ID:");
+        Scanner keyboard = new Scanner(System.in);
+        showID = keyboard.nextLine();
+
+        Show show = (Show) super.clone();
+        show.setShowID(showID);
+        keyboard.close();
+        return show;
     }
 
     public String toString()
