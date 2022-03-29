@@ -20,9 +20,9 @@ public class TVShow implements Watchable
 
     public TVShow(TVShow tvShow, String showID)
     {
-        this.showName = tvShow.showName;
-        this.startTime = tvShow.startTime;
-        this.endTime = tvShow.endTime;
+        this.showName = tvShow.getShowName();
+        this.startTime = tvShow.getStartTime();
+        this.endTime = tvShow.getEndTime();
         this.showID = showID;
     }
 

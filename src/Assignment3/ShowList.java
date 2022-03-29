@@ -76,9 +76,31 @@ public class ShowList<TVShow>
         head = null;
     }
 
+    //copy constructor
+    public ShowList (ShowList showList)
+    {
+        this.size = showList.getSize();
+        this.head = showList.getHead();
+    }
+
+    public void setSize(int size)
+    {
+        this.size = size;
+    }
+
     public int getSize()
     {
         return size;
+    }
+
+    public void setHead(ShowNode head)
+    {
+        this.head = head;
+    }
+
+    public ShowNode getHead()
+    {
+        return head;
     }
 
     public void addToStart(TVShow tvShow)
