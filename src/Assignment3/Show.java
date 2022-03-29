@@ -2,7 +2,7 @@ package Assignment3;
 
 import java.util.Scanner;
 
-public class Show
+public class Show implements Watchable
 {
     private String showID;
     private String showName;
@@ -106,7 +106,26 @@ public class Show
         {
             //two shows are equal with same attributes except for show ID
             Show show = (Show) object;
-            return (showName.equals(show.showName) && startTime == show.startTime && endTime == show.endTime);
+            return (showName.equals(show.getShowName()) && startTime == show.getStartTime() && endTime == show.getEndTime());
         }
+    }
+
+    @Override
+    public String isOnSameTime(Show show)
+    {
+        if(startTime == show.getEndTime() && endTime == show.getEndTime())
+        {
+            return "Same Time";
+        }
+        else if(startTime < show.getEndTime() && endTime < show.getEndTime())
+        {
+            return "Different Time";
+        }
+        else if(startTime > show.getEndTime() && endTime > show.getEndTime())
+        {
+            return "Different Time";
+        }
+        else
+            return "Some Overlap";
     }
 }
