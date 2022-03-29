@@ -2,7 +2,7 @@ package Assignment3;
 
 import java.util.Scanner;
 
-public class Show implements Watchable
+public class TVShow implements Watchable
 {
     private String showID;
     private String showName;
@@ -10,7 +10,7 @@ public class Show implements Watchable
     private double endTime;
 
     //parameterized constructor accepts four values and initializes to passed values
-    Show(String showID, String showName, double startTime, double endTime)
+    public TVShow(String showID, String showName, double startTime, double endTime)
     {
         this.showID = showID;
         this.showName = showName;
@@ -18,11 +18,11 @@ public class Show implements Watchable
         this.endTime = endTime;
     }
 
-    Show(Show show, String showID)
+    public TVShow(TVShow tvShow, String showID)
     {
-        this.showName = show.showName;
-        this.startTime = show.startTime;
-        this.endTime = show.endTime;
+        this.showName = tvShow.showName;
+        this.startTime = tvShow.startTime;
+        this.endTime = tvShow.endTime;
         this.showID = showID;
     }
 
@@ -81,10 +81,10 @@ public class Show implements Watchable
         Scanner keyboard = new Scanner(System.in);
         showID = keyboard.nextLine();
 
-        Show show = (Show) super.clone();
-        show.setShowID(showID);
+        TVShow tvShow = (TVShow) super.clone();
+        tvShow.setShowID(showID);
         keyboard.close();
-        return show;
+        return tvShow;
     }
 
     public String toString()
@@ -105,23 +105,23 @@ public class Show implements Watchable
         else
         {
             //two shows are equal with same attributes except for show ID
-            Show show = (Show) object;
-            return (showName.equals(show.getShowName()) && startTime == show.getStartTime() && endTime == show.getEndTime());
+            TVShow tvShow = (TVShow) object;
+            return (showName.equals(tvShow.getShowName()) && startTime == tvShow.getStartTime() && endTime == tvShow.getEndTime());
         }
     }
 
     @Override
-    public String isOnSameTime(Show show)
+    public String isOnSameTime(TVShow tvShow)
     {
-        if(startTime == show.getEndTime() && endTime == show.getEndTime())
+        if(startTime == tvShow.getEndTime() && endTime == tvShow.getEndTime())
         {
             return "Same Time";
         }
-        else if(startTime < show.getEndTime() && endTime < show.getEndTime())
+        else if(startTime < tvShow.getEndTime() && endTime < tvShow.getEndTime())
         {
             return "Different Time";
         }
-        else if(startTime > show.getEndTime() && endTime > show.getEndTime())
+        else if(startTime > tvShow.getEndTime() && endTime > tvShow.getEndTime())
         {
             return "Different Time";
         }

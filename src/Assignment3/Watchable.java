@@ -2,5 +2,5 @@ package Assignment3;
 
 public interface Watchable
 {
-    public String isOnSameTime(Show show);
+    public String isOnSameTime(TVShow TVShow);
 }
