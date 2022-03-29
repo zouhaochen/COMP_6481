@@ -1,6 +1,6 @@
 package Assignment3;
 
-public class ShowList
+public class ShowList<TVShow>
 {
     //inner class show node
     class ShowNode
@@ -9,7 +9,7 @@ public class ShowList
         private ShowNode showNode;
 
         //default constructor
-        public ShowNode()
+        public ShowNode ()
         {
             tVShow = null;
             showNode = null;
@@ -66,5 +66,36 @@ public class ShowList
         }
     }
 
+    private static int size;
+    private ShowNode head;
 
+    //default constructor an empty list
+    public ShowList ()
+    {
+        size = 0;
+        head = null;
+    }
+
+    public int getSize()
+    {
+        return size;
+    }
+
+    public void addToStart(TVShow tvShow)
+    {
+        ShowNode showNode = new ShowNode();
+        showNode = new ShowNode(tvShow, showNode);
+
+        if(head == null)
+        {
+            head = showNode;
+            size = 1;
+        }
+        else
+        {
+            showNode.showNode = this.head;
+            this.head = showNode;
+            size ++;
+        }
+    }
 }
