@@ -282,7 +282,7 @@ public class ShowList
         ShowNode current = this.head;
         int numberOfIteration = 0;
 
-        while(current.showNode != null)
+        while(current != null)
         {
             if(current.getTvShow().getShowID().equals(showID))
             {
@@ -296,16 +296,28 @@ public class ShowList
             }
         }
 
-        if(current.showNode == null)
-        {
-            if(current.getTvShow().getShowID().equals(showID))
-            {
-                System.out.println("Number of iteration to find the show id is: " + numberOfIteration);
-                return current;
-            }
-        }
-
-        System.out.println("Not in the list, number of iteration is: " + numberOfIteration);
+        System.out.println("Number of iteration to find the show id is: " + numberOfIteration);
         return null;
+    }
+
+    //accept show id and returns true and false on where has a tv show with the id or not
+    public boolean contain(String showID)
+    {
+        ShowNode current = this.head;
+
+        while(current != null)
+        {
+            if(current.getTvShow().getShowID() == showID)
+            {
+                return true;
+            }
+            current = current.showNode;
+        }
+        return false;
+    }
+
+    public boolean equals(ShowNode showNode1, ShowNode showNode2)
+    {
+        return showNode1.getTvShow().equals(showNode2.getTvShow());
     }
 }
