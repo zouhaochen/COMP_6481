@@ -2,7 +2,7 @@ package Assignment3;
 
 import java.util.NoSuchElementException;
 
-public class ShowList<TVShow>
+public class ShowList
 {
     //inner class show node
     class ShowNode
@@ -32,7 +32,7 @@ public class ShowList<TVShow>
                 System.out.println("Fatal Error");
                 System.exit(0);
             }
-            this.tVShow = showNode.getVShow();
+            this.tVShow = showNode.getTvShow();
             this.showNode = showNode.getShowNode();
         }
 
@@ -44,13 +44,13 @@ public class ShowList<TVShow>
         }
 
         //mutator of tv show
-        public void settVShow(TVShow tVShow)
+        public void setTvShow(TVShow tVShow)
         {
             this.tVShow = tVShow;
         }
 
         //accessor of tv show
-        public TVShow getVShow()
+        public TVShow getTvShow()
         {
             return tVShow;
         }
@@ -160,7 +160,7 @@ public class ShowList<TVShow>
     //insert the node at the index position
     public void insertAtIndex(TVShow tvShow, int index)
     {
-        if(index<0||index>getSize() - 1)
+        if(index < 0 || index>getSize() - 1)
         {
             System.exit(0);
             throw new NoSuchElementException();
@@ -199,4 +199,113 @@ public class ShowList<TVShow>
         return current;
     }
 
+    //delete the node pointed to the index
+    public void deleteFromIndex(int index)
+    {
+        if(index < 0 || index>getSize() - 1)
+        {
+            System.exit(0);
+            throw new NoSuchElementException();
+        }
+        else if(this.head == null)
+        {
+            size = 0;
+            return;
+        }
+        else
+        {
+            ShowNode temp = getNode(index);
+            if(temp.showNode != null)
+            {
+                temp.tVShow = temp.showNode.tVShow;
+                temp.showNode = temp.showNode.showNode;
+            }
+            else
+            {
+                //find the precursor node corresponding to the subscript
+                ShowNode previousNode = getNode(index - 1);
+                //set next for the precursor node to null
+                previousNode.showNode = null;
+            }
+            size--;
+        }
+    }
+
+    public ShowNode getNode(int index)
+    {
+        if(index<0||index>size-1)
+        {
+            System.exit(0);
+            throw new NoSuchElementException();
+        }
+
+        int location = 0;
+        ShowNode temp = this.head;
+
+        while(temp.showNode != null && location != index)
+        {
+            temp = temp.showNode;
+            location++;
+        }
+        return temp;
+    }
+
+    //delete the first node in the list
+    public void deleteFromStart()
+    {
+        if(head == null)
+        {
+            return;
+        }
+        else
+        {
+            ShowNode temp = this.head;
+            head = head.showNode;
+            size --;
+        }
+    }
+
+    //replace the object in the node at the passed index
+    public void replaceAtIndex(TVShow tvShow, int index)
+    {
+        if(index<0||index>size-1)
+        {
+            return;
+        }
+        ShowNode temp = moveIndex(index);
+        temp.tVShow = tvShow;
+    }
+
+    //find show id in the list
+    public ShowNode find(String showID)
+    {
+        ShowNode current = this.head;
+        int numberOfIteration = 0;
+
+        while(current.showNode != null)
+        {
+            if(current.getTvShow().getShowID().equals(showID))
+            {
+                System.out.println("Number of iteration to find the show id is: " + numberOfIteration);
+                return current;
+            }
+            else
+            {
+                current = current.showNode;
+                numberOfIteration ++;
+            }
+        }
+
+        if(current.showNode == null)
+        {
+            if(current.getTvShow().getShowID().equals(showID))
+            {
+                System.out.println("Number of iteration to find the show id is: " + numberOfIteration);
+                return current;
+            }
+        }
+
+        System.out.println("Not in the list, number of iteration is: " + numberOfIteration);
+        return null;
+    }
 }
