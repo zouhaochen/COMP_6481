@@ -109,7 +109,12 @@ public class ShowList
         return head;
     }
 
-    //insert the node at the head of the list
+    /*
+    insert the node at the head of the list
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
     public void addToStart(TVShow tvShow)
     {
         ShowNode showNode = new ShowNode();
@@ -128,7 +133,12 @@ public class ShowList
         }
     }
 
-    //insert the node at the last of the list
+    /*
+    insert the node at the last of the list
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode
+     */
     public void addToLast(TVShow tvShow)
     {
         ShowNode showNode = new ShowNode();
@@ -146,7 +156,12 @@ public class ShowList
         }
     }
 
-    //get the last node of the list
+    /*
+    get the last node of the list
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
     public ShowNode findLastNode()
     {
         ShowNode current = this.head;
@@ -157,7 +172,12 @@ public class ShowList
         return current;
     }
 
-    //insert the node at the index position
+    /*
+    insert the node at the index position
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
     public void insertAtIndex(TVShow tvShow, int index)
     {
         if(index < 0 || index>getSize() - 1)
@@ -186,7 +206,12 @@ public class ShowList
         current.showNode = showNode;
     }
 
-    //find the reference to the node at index - 1
+    /*
+    find the reference to the node at index - 1
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
     public ShowNode moveIndex(int index)
     {
         ShowNode current = this.head;
@@ -199,7 +224,12 @@ public class ShowList
         return current;
     }
 
-    //delete the node pointed to the index
+    /*
+    delete the node pointed to the index
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode, head, and tv show
+     */
     public void deleteFromIndex(int index)
     {
         if(index < 0 || index>getSize() - 1)
@@ -231,6 +261,11 @@ public class ShowList
         }
     }
 
+    /*
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
     public ShowNode getNode(int index)
     {
         if(index<0||index>size-1)
@@ -250,7 +285,12 @@ public class ShowList
         return temp;
     }
 
-    //delete the first node in the list
+    /*
+    delete the first node in the list
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
     public void deleteFromStart()
     {
         if(head == null)
@@ -265,7 +305,12 @@ public class ShowList
         }
     }
 
-    //replace the object in the node at the passed index
+    /*
+    replace the object in the node at the passed index
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter tv show
+     */
     public void replaceAtIndex(TVShow tvShow, int index)
     {
         if(index<0||index>size-1)
@@ -276,7 +321,12 @@ public class ShowList
         temp.tVShow = tvShow;
     }
 
-    //find show id in the list
+    /*
+    find show id in the list
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
     public ShowNode find(String showID)
     {
         ShowNode current = this.head;
@@ -300,7 +350,12 @@ public class ShowList
         return null;
     }
 
-    //accept show id and returns true and false on where has a tv show with the id or not
+    /*
+    accept show id and returns true and false on where has a tv show with the id or not
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
     public boolean contain(String showID)
     {
         ShowNode current = this.head;
@@ -316,8 +371,28 @@ public class ShowList
         return false;
     }
 
-    public boolean equals(ShowNode showNode1, ShowNode showNode2)
+    /*
+    this method may result in a privacy leak
+    because the parameter of the public method access directly to
+    the private parameter showNode and head
+     */
+    public boolean equals(ShowList showList1, ShowList showList2)
     {
-        return showNode1.getTvShow().equals(showNode2.getTvShow());
+        ShowNode current1 = showList1.head;
+        ShowNode current2 = showList2.head;
+
+        while (current1.showNode != null || current2.showNode != null)
+        {
+            if(current1.getTvShow().equals(current2.getTvShow()))
+            {
+                current1 = current1.showNode;
+                current2 = current2.showNode;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
