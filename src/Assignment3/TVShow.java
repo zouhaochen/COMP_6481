@@ -75,11 +75,11 @@ public class TVShow implements Watchable
     }
 
     //clone method
-    protected Object clone(String showID) throws CloneNotSupportedException
+    protected Object clone() throws CloneNotSupportedException
     {
         System.out.println("Please enter a new show ID:");
         Scanner keyboard = new Scanner(System.in);
-        showID = keyboard.nextLine();
+        String showID = keyboard.nextLine();
 
         TVShow tvShow = (TVShow) super.clone();
         tvShow.setShowID(showID);
@@ -89,7 +89,7 @@ public class TVShow implements Watchable
 
     public String toString()
     {
-        return "show ID: " + getShowID() + " show name: " + getShowName() + " start time: " + getStartTime() + " end time: " + getEndTime();
+        return "TV show information: show ID: " + getShowID() + " show name: " + getShowName() + " start time: " + getStartTime() + " end time: " + getEndTime();
     }
 
     public boolean equals(Object object)
