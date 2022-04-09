@@ -9,6 +9,15 @@ public class TVShow implements Watchable
     private double startTime;
     private double endTime;
 
+    //default constructor
+    public TVShow()
+    {
+        this.showID = "";
+        this.showName = "";
+        this.startTime = 0;
+        this.endTime = 0;
+    }
+
     //parameterized constructor accepts four values and initializes to passed values
     public TVShow(String showID, String showName, double startTime, double endTime)
     {
@@ -89,7 +98,7 @@ public class TVShow implements Watchable
 
     public String toString()
     {
-        return "TV show information: show ID: " + getShowID() + " show name: " + getShowName() + " start time: " + getStartTime() + " end time: " + getEndTime();
+        return "TV show information: show ID:\t" + getShowID() + "\tshow name:\t" + getShowName() + "\tstart time:\t" + getStartTime() + "\tend time:\t" + getEndTime();
     }
 
     public boolean equals(Object object)

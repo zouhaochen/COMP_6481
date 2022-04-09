@@ -4,7 +4,10 @@ import java.util.NoSuchElementException;
 
 public class ShowList
 {
-    //inner class show node
+    /*
+    inner class show node
+    fix the privacy leaks
+     */
     private class ShowNode
     {
         private TVShow tVShow;
@@ -115,6 +118,27 @@ public class ShowList
         return head;
     }
 
+
+    public void addNode(TVShow tvShow)
+    {
+        ShowNode showNode = new ShowNode(tvShow, null);
+        if (head == null)
+        {
+            head = showNode;
+            size = 1;
+        }
+        else
+        {
+            ShowNode temp = head;
+            while (temp.link != null)
+            {
+                temp = temp.link;
+            }
+
+            temp.link = showNode;
+            size++;
+        }
+    }
     /*
     insert the node at the head of the list
      */
