@@ -5,8 +5,11 @@ import java.util.NoSuchElementException;
 public class ShowList
 {
     /*
-    inner class show node
-    fix the privacy leaks
+    The original node and linked list classes examined so far have a dangerous flaw
+    The node class accessor method returns a reference to a node
+    Recall that if a method returns a reference to an instance variable of a mutable class type
+    The private restriction on the instance variables can be defeated
+    The private inner class ShowNode fix the privacy leaks
      */
     private class ShowNode
     {
