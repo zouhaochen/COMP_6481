@@ -84,9 +84,126 @@ public class Main
         for(int i = 0; i < tvShowArray.length; i++)
         {
             tvGuideLinkList.addNode(tvShowArray[i]);
+
+            if(i == tvShowArray.length - 1)
+            {
+                System.out.println("The linked list of tv show guide is constructed.");
+                System.out.println();
+            }
         }
 
+        //read and store interest content
+        File interest = new File(interestPath);
+        String interestContent = txtToString(interest);
+        String[] interestArray = stringToArray(interestContent);
+        ArrayList<String> interestArrayList = stringArrayList(interestArray);
 
+        int indexWatching = interestArrayList.indexOf("Watching");
+        int indexWishList = interestArrayList.indexOf("Wishlist");
+        int interestSize = interestArrayList.size();
+
+        //count the information of watching and wish
+        ArrayList<String> watchingList = new ArrayList<String>();
+        ArrayList<String> wishList = new ArrayList<String>();
+
+        for(int i = indexWatching + 1; i < indexWishList; i ++)
+        {
+            watchingList.add(interestArrayList.get(i));
+        }
+
+        for(int i = indexWishList + 1; i < interestSize; i ++)
+        {
+            wishList.add(interestArrayList.get(i));
+        }
+
+        ShowList watchingLinkedList = new ShowList();
+
+        //construct the show list that user is watching
+        for(int i = 0; i < watchingList.size(); i ++)
+        {
+            if(i == 0)
+            {
+                System.out.println("Start checking and construct the linked list of tv shows that the user is watching:");
+            }
+
+            TVShow tvShow = tvGuideLinkList.showNodeToTvShow(tvGuideLinkList.find(watchingList.get(i)));
+            watchingLinkedList.addNode(tvShow);
+
+            if(i == watchingList.size() - 1)
+            {
+                System.out.println("The linked list of tv shows that the user is watching is constructed.");
+                System.out.println();
+            }
+        }
+
+        ArrayList<String> availableTvShowList = new ArrayList<String>();
+
+        //check the availability of tv shows user interested
+        for(int i = 0; i < wishList.size(); i ++)
+        {
+            if(i == 0)
+            {
+                System.out.println("Start checking the availability of tv shows user interested:");
+            }
+
+            System.out.println("Whether tv guide contain the tv show: " + wishList.get(i) +
+                    " that the user is interested: " + tvGuideLinkList.contain(wishList.get(i)));
+            tvGuideLinkList.find(wishList.get(i));
+
+            if(tvGuideLinkList.contain(wishList.get(i)))
+            {
+                availableTvShowList.add(wishList.get(i));
+            }
+
+            if(i == wishList.size() - 1)
+            {
+                System.out.println("Finish checking the availability of tv shows user interested.");
+                System.out.println();
+            }
+        }
+
+        for(int i = 0; i < availableTvShowList.size(); i ++)
+        {
+            String availableTVShowID = availableTvShowList.get(i);
+            TVShow availableTVShow = tvGuideLinkList.showNodeToTvShow(tvGuideLinkList.findWithoutIterationInformation(availableTVShowID));
+            String[] isOnSameTimeInformation = new String[watchingLinkedList.getSize()];
+
+            for(int j = 0; j < watchingLinkedList.getSize(); j++)
+            {
+                TVShow watchingShow = watchingLinkedList.showNodeToTvShow(watchingLinkedList.getNode(j));
+                String twoShowInformation = watchingShow.isOnSameTime(availableTVShow);
+                isOnSameTimeInformation[j] = twoShowInformation;
+            }
+
+            boolean isDifferentTime = true;
+            for(int j = 0; j < isOnSameTimeInformation.length; j++)
+            {
+                if(!isOnSameTimeInformation[j].equals("Different Time"))
+                    isDifferentTime = false;
+            }
+
+            if(isDifferentTime == true)
+            {
+                System.out.println("User can watch show: " + availableTVShow + ".");
+                System.out.println("As she/he is not watching anything else during that time.");
+            }
+
+            for(int j = 0; j < isOnSameTimeInformation.length; j++)
+            {
+                if(isOnSameTimeInformation[j].equals("Same Time"))
+                {
+                    System.out.println("User cannot watch show: " + availableTVShow + ".");
+                    System.out.println("As she/he will begin another show at the same time.");
+                }
+
+                if(isOnSameTimeInformation[j].equals("Some Overlap"))
+                {
+
+                }
+            }
+
+            System.out.println();
+        }
     }
 
     public static String txtToString(File file)
@@ -128,9 +245,6 @@ public class Main
             else
                 continue;
         }
-
         return arrayList;
     }
-
-
 }

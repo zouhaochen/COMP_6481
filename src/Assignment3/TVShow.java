@@ -120,17 +120,21 @@ public class TVShow implements Watchable
     }
 
     @Override
+    /*
+    Assume that the user can change the channel very fast
+    so that a tv show on [20:00, 21:00] and a tv show on [21:00, 22:00] can be watched
+     */
     public String isOnSameTime(TVShow tvShow)
     {
-        if(startTime == tvShow.getEndTime() && endTime == tvShow.getEndTime())
+        if(startTime == tvShow.getStartTime() && endTime == tvShow.getEndTime())
         {
             return "Same Time";
         }
-        else if(startTime < tvShow.getEndTime() && endTime < tvShow.getEndTime())
+        else if(tvShow.getStartTime() < startTime && tvShow.getEndTime() <= startTime)
         {
             return "Different Time";
         }
-        else if(startTime > tvShow.getEndTime() && endTime > tvShow.getEndTime())
+        else if(tvShow.getStartTime() >= endTime && tvShow.getEndTime() > endTime)
         {
             return "Different Time";
         }

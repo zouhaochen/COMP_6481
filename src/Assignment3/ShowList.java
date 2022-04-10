@@ -323,7 +323,7 @@ public class ShowList
         {
             if(current.getTvShow().getShowID().equals(showID))
             {
-                System.out.println("Number of iteration to find the show id is: " + numberOfIteration);
+                System.out.println("Number of iteration to find the show id: " + showID + " is: " + numberOfIteration);
                 return current;
             }
             else
@@ -337,6 +337,35 @@ public class ShowList
         return null;
     }
 
+    public ShowNode findWithoutIterationInformation(String showID)
+    {
+        ShowNode current = this.head;
+
+        while(current != null)
+        {
+            if(current.getTvShow().getShowID().equals(showID))
+            {
+                return current;
+            }
+            else
+            {
+                current = current.link;
+            }
+        }
+        return null;
+    }
+
+    /*
+    get tv show information in show node
+    since show node is a private inner class
+    the method may allow a privacy leak
+     */
+    public TVShow showNodeToTvShow(ShowNode showNode)
+    {
+        TVShow tvShow = showNode.getTvShow();
+        return tvShow;
+    }
+
     /*
     accept show id and returns true and false on where has a tv show with the id or not
      */
@@ -346,7 +375,7 @@ public class ShowList
 
         while(current != null)
         {
-            if(current.getTvShow().getShowID() == showID)
+            if(current.getTvShow().getShowID().equals(showID))
             {
                 return true;
             }
