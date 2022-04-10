@@ -1,5 +1,6 @@
 package Assignment3;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class TVShow implements Watchable
@@ -98,7 +99,8 @@ public class TVShow implements Watchable
 
     public String toString()
     {
-        return "TV show information: show ID:\t" + getShowID() + "\tshow name:\t" + getShowName() + "\tstart time:\t" + getStartTime() + "\tend time:\t" + getEndTime();
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        return "TV show information: show ID: " + getShowID() + " show name: " + getShowName() + " start time: " + decimalFormat.format(getStartTime()) + " end time: " + decimalFormat.format(getEndTime());
     }
 
     public boolean equals(Object object)

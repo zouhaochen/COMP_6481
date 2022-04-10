@@ -190,15 +190,35 @@ public class Main
 
             for(int j = 0; j < isOnSameTimeInformation.length; j++)
             {
+                TVShow watchingShow = watchingLinkedList.showNodeToTvShow(watchingLinkedList.getNode(j));
+
                 if(isOnSameTimeInformation[j].equals("Same Time"))
                 {
                     System.out.println("User cannot watch show: " + availableTVShow + ".");
-                    System.out.println("As she/he will begin another show at the same time.");
+                    System.out.println("As she/he will begin & end another show: " + watchingShow + " at the same time.");
                 }
 
                 if(isOnSameTimeInformation[j].equals("Some Overlap"))
                 {
+                    double interestShowStartTime = availableTVShow.getStartTime();
+                    double interestShowEndTime = availableTVShow.getEndTime();
 
+                    double watchingShowStarTime = watchingShow.getStartTime();
+                    double watchingShowEndTime = watchingShow.getEndTime();
+
+                    if(interestShowStartTime == watchingShowStarTime)
+                    {
+                        System.out.println("User cannot watch show: " + availableTVShow + ".");
+                        System.out.println("As she/he will begin another show: " + watchingShow + " at the same time.");
+                        continue;
+                    }
+
+                    if(interestShowEndTime <= watchingShowEndTime)
+                    {
+                        System.out.println("User cannot watch show: " + availableTVShow + ".");
+                        System.out.println("As she/he is not finished with a show: " + watchingShow + " he/she is watching.");
+                        continue;
+                    }
                 }
             }
 
