@@ -231,13 +231,13 @@ public class Main
         String result = "";
         try
         {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String s = null;
-            while((s = br.readLine())!=null)
+            while((s = bufferedReader.readLine())!=null)
             {
                 result = result + "\n" +s;
             }
-            br.close();
+            bufferedReader.close();
         }
         catch(Exception e)
         {
