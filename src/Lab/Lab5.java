@@ -15,7 +15,7 @@ public class Lab5
             System.exit(0);
         }
 
-        if(letters.length() >= string.length())
+        if(letters.length() > string.length())
         {
             System.exit(0);
         }
