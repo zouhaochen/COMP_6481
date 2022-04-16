@@ -1,9 +1,13 @@
 package Lab;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Lab12
 {
+    public static ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+    public static ArrayList<Integer> list = new ArrayList<>();
+
     public static void main(String[] args)
     {
         Scanner keyboard = new Scanner(System.in);
@@ -68,6 +72,7 @@ public class Lab12
                 }
             }
         }
-
     }
+
+
 }
