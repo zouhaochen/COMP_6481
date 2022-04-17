@@ -84,7 +84,6 @@ public class Lab12
             }
         }
 
-        System.out.println(finalList);
         System.out.println(finalList.size());
     }
 }

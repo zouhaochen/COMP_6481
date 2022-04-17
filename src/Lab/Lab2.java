@@ -63,7 +63,5 @@ public class Lab2
             String newContent = keyboard.nextLine();
             text = text + " " + newContent;
         }
-
-        System.out.println(text);
     }
 }
