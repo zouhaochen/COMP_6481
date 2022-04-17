@@ -52,6 +52,7 @@ public class Lab5
                 }
 
                 boolean allCheck = true;
+
                 for(int j = 0; j <lettersInChar.length; j ++)
                 {
                     if (lettersInChar[j] == '*')
