@@ -7,116 +7,84 @@ public class Lab12
 {
     public static void main(String[] args)
     {
-        Scanner keyboard = new Scanner(System.in);
-        String firstLine = keyboard.nextLine();
-        int total = 0;
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        int n = sc.nextInt();
+        int n1;
 
-        try
-        {
-            total = Integer.parseInt(firstLine);
-        }
-        catch (Exception e)
-        {
-            System.exit(0);
-        }
+        ArrayList<Integer> num = new ArrayList<Integer>();
 
-        if(total >= 1000)
+        int sum;
+
+        for (int i = 0; i < n; i++)
         {
-            System.exit(0);
+            n1 = sc.nextInt();
+            num.add(n1);
         }
 
-        String secondLine = keyboard.nextLine();
-        int numberOfInteger = 0;
-
-        try
-        {
-            numberOfInteger = Integer.parseInt(secondLine);
-        }
-        catch (Exception e)
-        {
-            System.exit(0);
-        }
-
-        if(numberOfInteger < 1 || numberOfInteger > 12)
-        {
-            System.exit(0);
-        }
-
-        int[] list = new int[numberOfInteger];
-
-        for(int i = 0; i < list.length; i++)
-        {
-            list[i] = keyboard.nextInt();
-        }
-
-        for(int i = 0; i < list.length; i++)
-        {
-            if(list[i] >= 100)
-            {
-                System.exit(0);
-            }
-        }
-
-        int sum = 0;
-
-        for(int i = 0; i < list.length; i++)
-        {
-            sum = sum + list[i];
-        }
-
-        if(sum < total)
-        {
-            System.out.println(0);
-            System.exit(0);
-        }
-
-        ArrayList<Integer> dataList = new ArrayList<Integer>();
-        for(int i = 0; i < list.length; i ++)
-        {
-            dataList.add(list[i]);
-        }
-
-        int remain = total;
         ArrayList<Integer> sumList = new ArrayList<Integer>();
-        ArrayList<String> sumInfoList = new ArrayList<String>();
-        int count = 0;
+        ArrayList<String> finalList = new ArrayList<String>();
 
-        for(int i = 0; i < dataList.size(); i ++)
+        for (int i = 0; i < num.size(); i++)
         {
-            if(remain > 0)
+            if (num.get(i) == t)
             {
-                int newRemain = remain - dataList.get(i);
-                if(newRemain > 0)
+                sumList.add(num.get(i));
+                String sumListInString = sumList.toString();
+
+                if(finalList.contains(sumListInString))
                 {
-                    sumList.add(dataList.get(i));
-                    remain = newRemain;
-                }
-                else if(newRemain == 0)
-                {
-                    sumList.add(dataList.get(i));
-                    String currentInfo = sumList.toString();
 
-                    if(sumInfoList.contains(currentInfo))
-                    {
-
-                    }
-                    else
-                    {
-                        sumInfoList.add(currentInfo);
-                    }
-
-                    sumList.clear();
-                    remain = total;
-                    i = count ++;
-                    continue;
                 }
                 else
                 {
-                    continue;
+                    finalList.add(sumListInString);
+                }
+
+                sumList.clear();
+            }
+            else
+            {
+                sum = num.get(i);
+                sumList.add(num.get(i));
+
+                for (int j = i + 1; j < num.size(); j++)
+                {
+                    sum += num.get(j);
+
+                    if (sum == t)
+                    {
+                        sumList.add(num.get(j));
+                        String sumListInString = sumList.toString();
+
+                        if(finalList.contains(sumListInString))
+                        {
+
+                        }
+                        else
+                        {
+                            finalList.add(sumListInString);
+                        }
+
+                        sumList.clear();
+
+                        break;
+                    }
+                    else if (sum > t)
+                    {
+                        sum -= num.get(j);
+                        continue;
+                    }
+                    else if (sum < t)
+                    {
+                        sumList.add(num.get(j));
+                        continue;
+                    }
                 }
             }
         }
 
-        System.out.println(sumInfoList.size());
+        System.out.println(finalList);
+        System.out.println(finalList.size());
     }
 }
