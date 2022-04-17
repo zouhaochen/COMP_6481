@@ -1,5 +1,6 @@
 package Lab;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -62,6 +63,54 @@ public class Lab2
         {
             String newContent = keyboard.nextLine();
             text = text + " " + newContent;
+        }
+
+        String[] stringList = text.split("[,\\s.]");
+
+        ArrayList<String> list = new ArrayList<String>();
+        for(int i = 0; i < stringList.length; i ++)
+        {
+            if(stringList[i].equals(""))
+            {
+
+            }
+            else
+            {
+                list.add(stringList[i]);
+            }
+        }
+
+        ArrayList<String> elementList = new ArrayList<String>();
+
+        for(int i = 0; i < list.size(); i ++)
+        {
+            if(elementList.contains(list.get(i)))
+            {
+
+            }
+            else
+            {
+                elementList.add(list.get(i));
+            }
+        }
+
+        int elementListSize = elementList.size();
+
+        int[] countTable = new int[elementListSize];
+
+        for(int i = 0; i < countTable.length; i++)
+        {
+            String target = elementList.get(i);
+            int count = 0;
+
+            for(int j = 0; j < list.size(); j++)
+            {
+                if(list.get(j).equals(target))
+                {
+                    count ++;
+                }
+            }
+            countTable[i] = count;
         }
     }
 }
